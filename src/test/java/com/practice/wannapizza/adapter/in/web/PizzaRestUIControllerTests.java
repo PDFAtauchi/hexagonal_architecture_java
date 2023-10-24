@@ -1,6 +1,7 @@
 package com.practice.wannapizza.adapter.in.web;
 
 
+import com.github.javafaker.Faker;
 import com.practice.wannapizza.application.domain.model.Pizza;
 import com.practice.wannapizza.port.in.PizzaUseCasePort;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,6 +23,7 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
@@ -48,15 +50,21 @@ public class PizzaRestUIControllerTests {
 
     @BeforeEach
     public void setup() {
-        long id = 1L;
-        String name = "My Pizza";
-        String toppings[] = {"Tomato", "Mozzarella", "Basil"};
-        myPizza = Pizza.builder()
+        myPizza = generatePizzaObject();
+        serviceUrl = "/api/pizza/";
+    }
+
+    public Pizza generatePizzaObject() {
+        Faker faker = new Faker(new Locale("en-US"));
+        long id = 0;
+        String toppings[] = {faker.food().ingredient(), faker.food().ingredient(), faker.food().ingredient()};
+        Pizza pizza = Pizza.builder()
                 .id(id)
-                .name(name)
+                .name(faker.food().dish())
                 .toppings(toppings)
                 .build();
-        serviceUrl = "/api/pizza/";
+
+        return pizza;
     }
 
     @Test
@@ -138,10 +146,7 @@ public class PizzaRestUIControllerTests {
     @Test
     public void givenListOfPizzas_whenGetPizzas_thenReturnListOfPizzas() throws Exception {
         // Given
-        Pizza pizza2 = myPizza;
-        pizza2.setName("New Pizza");
-        String[] toppingsPizza2 = {"Tomato", "Chesse", "Onion"};
-        pizza2.setToppings(toppingsPizza2);
+        Pizza pizza2 = generatePizzaObject();
         List<Pizza> myPizzas = List.of(myPizza, pizza2);
 
         given(pizzaService.getAllPizza()).willReturn(myPizzas);

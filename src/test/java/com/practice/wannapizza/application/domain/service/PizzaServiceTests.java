@@ -1,5 +1,6 @@
 package com.practice.wannapizza.application.domain.service;
 
+import com.github.javafaker.Faker;
 import com.practice.wannapizza.application.domain.model.Pizza;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -17,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
@@ -32,14 +34,20 @@ public class PizzaServiceTests {
 
     @BeforeEach
     public void setup() {
-        long id = 1L;
-        String name = "My Pizza";
-        String toppings[] = {"Tomato", "Mozzarella", "Basil"};
-        myPizza = Pizza.builder()
+        myPizza = generatePizzaObject();
+    }
+
+    public Pizza generatePizzaObject() {
+        Faker faker = new Faker(new Locale("en-US"));
+        long id = 0;
+        String toppings[] = {faker.food().ingredient(), faker.food().ingredient(), faker.food().ingredient()};
+        Pizza pizza = Pizza.builder()
                 .id(id)
-                .name(name)
+                .name(faker.food().dish())
                 .toppings(toppings)
                 .build();
+
+        return pizza;
     }
 
     @Test
@@ -102,10 +110,8 @@ public class PizzaServiceTests {
     @Test
     public void givenPizzas_whenGetAllPizzas_thenReturnAllPizzas() {
         // Given
-        Pizza pizza1 = myPizza;
-        myPizza.setName("Cangre Burger");
-        Pizza pizza2 = myPizza;
-        List<Pizza> myPizzas = List.of(pizza1, pizza2);
+        Pizza pizza2 = generatePizzaObject();
+        List<Pizza> myPizzas = List.of(myPizza, pizza2);
 
         given(pizzaRepository.getAllPizza()).willReturn(myPizzas);
 
