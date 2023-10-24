@@ -1,5 +1,6 @@
 package com.practice.wannapizza.adapter.out.persistence;
 
+import com.github.javafaker.Faker;
 import com.practice.wannapizza.application.domain.model.Pizza;
 import com.practice.wannapizza.port.out.PizzaRepositoryPort;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -21,14 +23,20 @@ public class PizzaRepositoryTests {
 
     @BeforeEach
     public void setup() {
-        long id = 1L;
-        String name = "My Pizza";
-        String toppings[] = {"Tomato", "Mozzarella", "Basil"};
-        myPizza = Pizza.builder()
+        myPizza = generatePizzaObject();
+    }
+
+    public Pizza generatePizzaObject() {
+        Faker faker = new Faker(new Locale("en-US"));
+        long id = 0;
+        String toppings[] = {faker.food().ingredient(), faker.food().ingredient(), faker.food().ingredient()};
+        Pizza pizza = Pizza.builder()
                 .id(id)
-                .name(name)
+                .name(faker.food().dish())
                 .toppings(toppings)
                 .build();
+
+        return pizza;
     }
 
     @Test
@@ -41,6 +49,7 @@ public class PizzaRepositoryTests {
         // Then
         assertThat(createdPizza.isPresent());
         assertThat(createdPizza.get()).isEqualTo(myPizza);
+        assertThat(createdPizza.get().getId()).isGreaterThanOrEqualTo(1L);
     }
 
     @Test
@@ -71,15 +80,16 @@ public class PizzaRepositoryTests {
     public void givenPizzas_whenGetAllPizza_thenReturnListOfPizzas() {
         // Given pizzas
         pizzaRepository.createPizza(myPizza);
-        myPizza.setName("New Pizza");
-        pizzaRepository.createPizza(myPizza);
-        myPizza.setName("Other Pizza");
-        pizzaRepository.createPizza(myPizza);
+        pizzaRepository.createPizza(generatePizzaObject());
+        pizzaRepository.createPizza(generatePizzaObject());
 
         // When
         List<Pizza> pizzas = pizzaRepository.getAllPizza();
 
         // Then
         assertThat(pizzas.size()).isEqualTo(3);
+        assertThat(pizzas.get(0).getId()).isGreaterThanOrEqualTo(1L);
+        assertThat(pizzas.get(1).getId()).isGreaterThanOrEqualTo(1L);
+        assertThat(pizzas.get(2).getId()).isGreaterThanOrEqualTo(1L);
     }
 }

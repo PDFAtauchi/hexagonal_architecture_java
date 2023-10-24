@@ -8,15 +8,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 @Repository
 public class PizzaRepository implements PizzaRepositoryPort {
 
     private Map<String, Pizza> pizzaStore = new HashMap<String, Pizza>();
+    private final AtomicLong idCounter = new AtomicLong(1);
 
     @Override
     public Optional<Pizza> createPizza(Pizza pizza) {
+        long id = idCounter.getAndIncrement();
+        pizza.setId(id);
         pizzaStore.put(pizza.getName(), pizza);
         Pizza myPizza = pizzaStore.get(pizza.getName());
         return Optional.of(myPizza);
