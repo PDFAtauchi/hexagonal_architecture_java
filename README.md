@@ -1,5 +1,6 @@
 # Application using Hexagonal Architecture
 
+![Hexagonal Architecture]((https://github.com/PDFAtauchi/hexagonal_architecture_java/raw/main/hexagonal-architecture.png))
 
 ## Stack
 - Java 17
