@@ -1,4 +1,5 @@
 package com.practice.wannapizza.application.domain.model;
+
 import lombok.*;
 
 @Setter

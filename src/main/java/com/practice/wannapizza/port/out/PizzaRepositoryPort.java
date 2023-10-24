@@ -3,11 +3,12 @@ package com.practice.wannapizza.port.out;
 import com.practice.wannapizza.application.domain.model.Pizza;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PizzaRepositoryPort {
-    void createPizza(Pizza pizza);
+    Optional<Pizza> createPizza(Pizza pizza);
 
-    Pizza getPizza(String name);
+    Optional<Pizza> getPizza(String name);
 
     List<Pizza> getAllPizza();
 }
