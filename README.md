@@ -9,6 +9,8 @@
 - PostgreSQL
 - testContainers
 
+### To Run
+    - mvn spring-boot:run
 ## Tests
 ### Run Tests without jaCoCo
     - mvn test
