@@ -4,10 +4,12 @@ import com.practice.wannapizza.application.domain.model.Pizza;
 import com.practice.wannapizza.port.in.PizzaUseCasePort;
 import com.practice.wannapizza.port.out.PizzaRepositoryPort;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class PizzaService implements PizzaUseCasePort {
 
     @Autowired
