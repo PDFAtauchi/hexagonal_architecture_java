@@ -1,17 +1,13 @@
 package com.practice.wannapizza.application.domain.service;
 
 import com.practice.wannapizza.application.domain.model.Pizza;
-// import com.practice.wannapizza.exception.ResourceNotFoundException;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.*;
 
 import com.practice.wannapizza.port.out.PizzaRepositoryPort;
