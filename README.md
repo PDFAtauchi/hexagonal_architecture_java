@@ -4,13 +4,29 @@
 ## Stack
 - Java 17
 - Spring Boot 3.1.5
-- JPA
-- Hibernate
-- PostgreSQL
-- testContainers
 
 ### To Run
     - mvn spring-boot:run
+
+#### POST http://localhost:8080/api/pizza/
+ ```
+{
+    "name": "Familiar",
+    "toppings": ["cheese", "tomatoes"]
+}
+```
+#### POST http://localhost:8080/api/pizza/
+ ```
+{
+    "name": "Extra_big",
+    "toppings": ["cheese", "cucumber"]
+}
+```
+#### GET http://localhost:8080/api/pizza/Familiar/
+#### GET http://localhost:8080/api/pizza/Extra_big/
+#### GET http://localhost:8080/api/pizza/
+
+##### 
 ## Tests
 ### Run Tests without jaCoCo
     - mvn test
